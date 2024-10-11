@@ -1,0 +1,49 @@
+{
+  "properties": [
+    {
+      "name": "swagger.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否开启swagger."
+    },
+    {
+      "name": "swagger.version",
+      "type": "java.lang.String",
+      "description": "swagger version."
+    },
+    {
+      "name": "swagger.title",
+      "type": "java.lang.String",
+      "description": "title  ."
+    },
+    {
+      "name": "swagger.base-package",
+      "type": "java.lang.String",
+      "description": "package path ."
+    },
+    {
+      "name": "swagger.base-path",
+      "type": "java.lang.String",
+      "description": "root path ."
+    },
+    {
+      "name": "swagger.groupName",
+      "type": "java.lang.String",
+      "description": "group name."
+    },
+    {
+      "name": "swagger.exclude-path",
+      "type": "java.lang.String",
+      "description": "exclude path ."
+    },
+    {
+      "name": "swagger.description",
+      "type": "java.lang.String",
+      "description": "description ."
+    },
+    {
+      "name": "swagger.ui-config",
+      "type": "java.lang.String",
+      "description": "description ."
+    }
+  ]
+}

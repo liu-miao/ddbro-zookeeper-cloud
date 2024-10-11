@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ scan 配置文件如果发生改变，将会被重新加载，默认值为true
+ debug 当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false
+ scanPeriod: 设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。
+ -->
+<configuration debug="false" scan="true">
+    <springProperty scop="context" name="spring.application.name" source="spring.application.name" defaultValue=""/>
+    <springProperty scope="context" name="LOG_LEVEL" source="logging.level.root"/>
+    <!--  定义变量 日志存放路径-->
+    <property name="log.path" value="logs/${spring.application.name}"/>
+    <!-- 彩色日志格式 -->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+    <!-- 彩色日志依赖的渲染类 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+    <!--
+     负责写日志的组件，它有两个必要属性name和class。name指定appender名称，class指定appender的全限定名。
+     输出日志的核心，定义了日志的数据格式、日志类型、日志文件大小、日志保存时间和轮转策略
+     -->
+    <!-- Console log output -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!--    决定通过哪种方式写日志    -->
+        <encoder>
+            <!--     定义日志输出格式，例如：年月日时分秒和毫秒信息，线程名称，类名，日志级别       -->
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+    <!--  日志级别  error > warn > info > debug > trace  -->
+
+    <!-- Log file handler-->
+    <appender name="INFO_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/%d{yyyy-MM, aux}/info.%d{yyyy-MM-dd}.%i-log.gz</fileNamePattern>
+            <maxFileSize>5MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date [%thread] %-5level [%logger{50}] %file:%line - %msg%n</pattern>
+        </encoder>
+        <!-- 日志过滤 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+
+    <!--  指定基础的日志输出级别  -->
+    <!-- Level: FATAL 0  ERROR 3  WARN 4  INFO 6  DEBUG 7 -->
+
+    <!--    &lt;!&ndash; 多环境配置 &ndash;&gt;-->
+    <!--    <springProfile name="prod,test,uat">-->
+    <!--        <logger name="com.ddbro" level="info"/>-->
+    <!--        <logger name="org.springframework.data" level="info"/>-->
+    <!--        &lt;!&ndash; root &ndash;&gt;-->
+    <!--        <root level="INFO">-->
+    <!--            <appender-ref ref="INFO_LOG_FILE"/>-->
+    <!--        </root>-->
+    <!--        <root level="INFO">-->
+    <!--            <appender-ref ref="CONSOLE"/>-->
+    <!--        </root>-->
+    <!--    </springProfile>-->
+
+
+    <!--    &lt;!&ndash; 开发环境 &ndash;&gt;-->
+    <!--    <springProfile name="dev">-->
+    <!--        &lt;!&ndash;  开启sql 日志  &ndash;&gt;-->
+    <!--        <logger name="com.ddbro" level="debug"/>-->
+    <!--        <logger name="org.springframework.data" level="debug"/>-->
+    <!--        &lt;!&ndash; root &ndash;&gt;-->
+    <!--        <root level="DEBUG">-->
+    <!--            <appender-ref ref="CONSOLE"/>-->
+    <!--        </root>-->
+    <!--        <root level="DEBUG">-->
+    <!--            <appender-ref ref="INFO_LOG_FILE"/>-->
+    <!--        </root>-->
+    <!--    </springProfile>-->
+    <!-- 开发环境 -->
+    <springProfile name="dev">
+        <!--  开启sql 日志  -->
+        <logger name="com.ddbro" level="debug"/>
+        <!-- root -->
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+</configuration>

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ddbro</groupId>
+    <artifactId>ddbro-zookeeper-cloud</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <!--    编译相关    -->
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+        <docker-maven-plugin.version>1.2.2</docker-maven-plugin.version>
+        <lombok.version>1.18.30</lombok.version>
+        <spring-boot-maven-plugin.version>3.3.0</spring-boot-maven-plugin.version>
+        <!--   spring相关     -->
+        <spring-boot-dependencies.version>3.2.4</spring-boot-dependencies.version>
+        <!--   spring相关     -->
+        <spring-cloud.version>2023.0.2</spring-cloud.version>
+        <!--   数据库相关     -->
+        <!--这里三个依赖的版本暂时不要动，mbp和pagehelper整合有版本问题，暂时已解决
+        参考自：https://blog.csdn.net/jamesleel/article/details/136445743-->
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
+        <sqlparser.version>6.1.0</sqlparser.version>
+        <pagehelper.version>2.1.0</pagehelper.version>
+        <p6spy.version>1.9.1</p6spy.version>
+        <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
+        <mapStruct.version>1.4.2.Final</mapStruct.version>
+        <mysql.version>8.0.23</mysql.version>
+        <druid-starter.version>1.2.6</druid-starter.version>
+
+        <xxl-job-core.versoion>2.3.0</xxl-job-core.versoion>
+        <!--    工具    -->
+        <hutool.version>5.8.3</hutool.version>
+        <redisson-starter.version>3.16.1</redisson-starter.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
+        <hibernate.version>7.0.4.Final</hibernate.version>
+        <fastjson.version>1.2.72</fastjson.version>
+        <knife4j-swagger.version>4.5.0</knife4j-swagger.version>
+        <springdoc-openapi-security.version>1.8.0</springdoc-openapi-security.version>
+        <!--    jwt    -->
+        <jjwt.version>0.9.1</jjwt.version>
+        <jwt.version>3.10.3</jwt.version>
+
+        <!--2022.8.3-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <java.version>21</java.version>
+        <!--  xml    -->
+        <jdom2.version>2.0.6</jdom2.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jdom</groupId>
+                <artifactId>jdom2</artifactId>
+                <version>${jdom2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ddbro</groupId>
+                <artifactId>ddbro-core-base</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <!--基于knife4j-openapi3的api接口文档生成-->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+                <version>${knife4j-swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-security</artifactId>
+                <version>${springdoc-openapi-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapStruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapStruct.version}</version>
+            </dependency>
+
+            <!--            spring-boot -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <dependencies>
+
+
+        <dependency>
+            <!--   加密 -->
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+        <!--   lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+        <!--   单元测试     -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <!--     仓库 -->
+    <repositories>
+        <repository>
+            <id>spring-snapshots</id>
+            <url>https://repo.spring.io/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>
+        <repository>
+            <id>aliyun</id>
+            <name>aliyun maven</name>
+            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>nexus</id>
+            <name>bmf-nexus</name>
+            <url>https://nexus.ddbro.com/repository/bmf-central/</url>
+        </repository>
+    </repositories>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <envFlag>dev</envFlag>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <envFlag>test</envFlag>
+            </properties>
+        </profile>
+        <profile>
+            <id>uat</id>
+            <properties>
+                <envFlag>uat</envFlag>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <envFlag>prod</envFlag>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <finalName>${project.name}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>application-dev.yml</exclude>
+                    <exclude>application-test.yml</exclude>
+                    <exclude>application-uat.yml</exclude>
+                    <exclude>application-prod.yml</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>application.yml</include>
+                    <include>application-${envFlag}.yml</include>
+                </includes>
+            </resource>
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot-maven-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <!--        提供覆盖默认 Java 编译器版本的选项            -->
+                    <source>21</source>
+                    <target>21</target>
+                    <encoding>UTF-8</encoding>
+
+                    <annotationProcessorPaths>
+                        <!-- 必须要加, 否则生成不了 MapperImpl 实现类 -->
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapStruct.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <!-- 如果是 0.1.0 有可能出现生成了mapStruct的实现类, 但该类只创建了对象, 没有进行赋值 -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>0.2.0</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <!-- docker 容器构建-->
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker-maven-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <!--加密和解密-->
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-maven-plugin</artifactId>
+                <version>3.0.3</version>
+            </plugin>
+        </plugins>
+
+    </build>
+
+    <modules>
+        <module>ddbro-starters</module>
+        <module>ddbro-core</module>
+        <module>ddbro-cloud</module>
+        <module>ddbro-api</module>
+        <module>ddbro-biz</module>
+    </modules>
+</project>

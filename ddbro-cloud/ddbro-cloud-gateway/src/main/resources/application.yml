@@ -1,0 +1,19 @@
+server:
+  port: 9999
+  undertow:
+    threads:
+      io: 8
+      worker: 256
+    buffer-size: 1024
+    direct-buffers: true
+spring:
+  application:
+    name: @project.artifactId@
+  profiles:
+    active: @envFlag@
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true

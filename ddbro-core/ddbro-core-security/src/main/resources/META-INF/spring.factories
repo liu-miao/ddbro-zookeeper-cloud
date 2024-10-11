@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.ddbro.security.config.SecurityConfig,\
+  com.ddbro.security.interceptor.MyInterceptor

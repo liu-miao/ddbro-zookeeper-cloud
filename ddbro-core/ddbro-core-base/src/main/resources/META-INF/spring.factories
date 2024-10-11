@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.ddbro.core.config.JacksonConfiguration, \
+  com.ddbro.core.exception.handler.GlobalExceptionHandler,\
+  com.ddbro.core.config.CorsConfig
